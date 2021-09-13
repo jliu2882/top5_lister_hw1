@@ -35,6 +35,18 @@ export default class Top5View {
         card.setAttribute("class", "list-card");
         card.setAttribute("class", "unselected-list-card");
 
+        //added start
+        let css = '.unselected-list-card:hover { background-color: black; color:white; } .selected-list-card:hover { background-color: black; color:white; }';
+        let style = document.createElement('style');
+
+        if (style.styleSheet) {
+            style.styleSheet.cssText = css;
+        } else {
+            style.appendChild(document.createTextNode(css));
+        }
+        card.appendChild(style);
+        //added end
+
         // MAKE THE TEXT SPAN
         let textSpan = document.createElement("span");
         textSpan.setAttribute("id", "list-card-text-" + newList.id);

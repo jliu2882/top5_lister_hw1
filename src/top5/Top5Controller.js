@@ -42,18 +42,23 @@ export default class Top5Controller {
                     textInput.setAttribute("type", "text");
                     textInput.setAttribute("id", "item-text-input-" + i);
                     textInput.setAttribute("value", this.model.currentList.getItemAt(i-1));
-
+                    
                     item.appendChild(textInput);
-
+                    
+                    //didnt write this but isnt this useless lol
                     textInput.ondblclick = (event) => {
                         this.ignoreParentClick(event);
                     }
+                    //lmao
                     textInput.onkeydown = (event) => {
                         if (event.key === 'Enter') {
                             this.model.addChangeItemTransaction(i-1, event.target.value);
                         }
                     }
                     textInput.onblur = (event) => {
+                        //added start
+                        this.model.addChangeItemTransaction(i-1, event.target.value);
+                        //added end
                         this.model.restoreList();
                     }
                 }
@@ -80,6 +85,11 @@ export default class Top5Controller {
             deleteSpan.innerHTML = "";
             deleteSpan.appendChild(document.createTextNode(listName));
             modal.classList.add("is-visible");
+            //added start
+            let deleteButton = document.getElementById("dialog-confirm-button");
+            deleteButton.setAttribute("onclick","alert(document.)"); //this.model.deleteList(id)a hahaha
+            //added end
+            
         }
     }
 

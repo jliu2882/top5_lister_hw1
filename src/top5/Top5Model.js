@@ -31,7 +31,6 @@ export default class Top5Model {
         // WE'LL USE THIS TO ASSIGN ID NUMBERS TO EVERY LIST
         this.nextListId = 0;
     }
-
     getList(index) {
         return this.top5Lists[index];
     }
