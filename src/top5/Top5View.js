@@ -18,7 +18,6 @@ export default class Top5View {
             let list = lists[i];
             this.appendListToView(list);
         }
-        console.log("hi");
     }
 
     setController(initController) {

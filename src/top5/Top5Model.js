@@ -107,6 +107,7 @@ export default class Top5Model {
 
     loadLists() {
         // CHECK TO SEE IF THERE IS DATA IN LOCAL STORAGE FOR THIS APP
+        this.nextListId = 0; //hehehehehehhehhehehhehehhehehehehhehehehehehehehehe
         let recentLists = localStorage.getItem("recent_work");
         if (!recentLists) {
             return false;
@@ -145,18 +146,21 @@ export default class Top5Model {
     }
 
     deleteList(id){
+        
         if(this.currentList == this.getList(this.getListIndex(id))){
             this.currentList = null;
         }
-        //this.top5Lists.splice(this.getListIndex(id), 1);
+        this.top5Lists.splice(this.getListIndex(id), 1);
         //this.top5Lists[this.getListIndex(id)] = null;
         
         //set to null, but then skip null lists?
         //or maybe splice and decrease the list index thing so we dont read over 
 
         this.saveLists();
-        this.sortLists();
+        this.loadLists();
+        
     }
+    
     changeItem(id, text) {
         this.currentList.items[id] = text;
         this.view.update(this.currentList);
