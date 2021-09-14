@@ -10,7 +10,7 @@ export default class Top5List {
     constructor(initId) {
         this.id = initId;
     }
-
+    
     getName() {
         return this.name;
     }

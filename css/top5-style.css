@@ -111,10 +111,15 @@ body {
   background-color: var(--swatch-accent);
   color: white;
 }
-
 .unselected-list-card {
   background-color: var(--swatch-complement);
 }
+
+.unselected-list-card:hover, .selected-list-card:hover {
+  background-color: black;
+  color:white;
+}
+
 
 .list-card-button {
   float:right;

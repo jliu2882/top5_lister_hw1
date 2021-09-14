@@ -86,7 +86,6 @@ export default class Top5Model {
             this.view.unhighlightList(i);
         }
     }
-
     loadList(id) {
         let list = null;
         let found = false;
@@ -145,6 +144,19 @@ export default class Top5Model {
         this.tps.addTransaction(transaction);
     }
 
+    deleteList(id){
+        if(this.currentList == this.getList(this.getListIndex(id))){
+            this.currentList = null;
+        }
+        //this.top5Lists.splice(this.getListIndex(id), 1);
+        //this.top5Lists[this.getListIndex(id)] = null;
+        
+        //set to null, but then skip null lists?
+        //or maybe splice and decrease the list index thing so we dont read over 
+
+        this.saveLists();
+        this.sortLists();
+    }
     changeItem(id, text) {
         this.currentList.items[id] = text;
         this.view.update(this.currentList);
