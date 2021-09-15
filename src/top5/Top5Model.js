@@ -58,6 +58,7 @@ export default class Top5Model {
         this.top5Lists.push(newList);
         this.sortLists();
         this.view.refreshLists(this.top5Lists);
+        this.view.updateToolbarButtons(this);
         return newList;
     }
 
@@ -72,7 +73,7 @@ export default class Top5Model {
             else {
                 return 1;
             }
-        });
+        });+
         this.view.refreshLists(this.top5Lists);
     }
 
@@ -89,7 +90,11 @@ export default class Top5Model {
     loadList(id) {
         let list = null;
         let found = false;
+        let clear = true;
         let i = 0;
+        if(this.currentList !== null && this.currentList.id == id){
+            clear = false;
+        }
         while ((i < this.top5Lists.length) && !found) {
             list = this.top5Lists[i];
             if (list.id === id) {
@@ -101,7 +106,10 @@ export default class Top5Model {
             }
             i++;
         }
-        this.tps.clearAllTransactions();
+        if(clear){
+            this.tps.clearAllTransactions();
+        }
+        this.view.updateToolbarButtons(this);
     }
 
     loadLists() {
@@ -124,6 +132,7 @@ export default class Top5Model {
             }
             this.sortLists();   
             this.view.refreshLists(this.top5Lists);
+            this.view.updateToolbarButtons(this);
             return true;
         }        
     }
@@ -135,6 +144,7 @@ export default class Top5Model {
 
     restoreList() {
         this.view.update(this.currentList);
+        this.view.updateToolbarButtons(this);
     }
 
     addChangeItemTransaction = (id, newText) => {
@@ -142,21 +152,23 @@ export default class Top5Model {
         let oldText = this.currentList.items[id];
         let transaction = new ChangeItem_Transaction(this, id, oldText, newText);
         this.tps.addTransaction(transaction);
+        this.view.updateToolbarButtons(this);
     }
 
     deleteList(id){
         
         if(this.currentList == this.getList(this.getListIndex(id))){
+            document.getElementById("top5-statusbar").textContent  = "";
             this.currentList = null;
+            this.top5Lists.splice(this.getListIndex(id), 1);
+            this.saveLists();
+            this.loadLists();
+        } else{
+            this.top5Lists.splice(this.getListIndex(id), 1);
+            this.saveLists();
+            this.loadLists();
+            this.view.highlightList(this.currentList.id);
         }
-        this.top5Lists.splice(this.getListIndex(id), 1);
-        //this.top5Lists[this.getListIndex(id)] = null;
-        
-        //set to null, but then skip null lists?
-        //or maybe splice and decrease the list index thing so we dont read over 
-
-        this.saveLists();
-        this.loadLists();
         
     }
     
@@ -180,7 +192,9 @@ export default class Top5Model {
         }
     }
     close() {
-        this.view.updateToolbarButtons(this);
+        document.getElementById("top5-statusbar").textContent  = "";
         this.sortLists();
+        this.view.clearWorkspace();
+        this.view.updateToolbarButtons(this);
     }
 }

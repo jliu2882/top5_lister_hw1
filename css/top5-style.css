@@ -69,8 +69,25 @@ body {
   top: 90%;
   width: 100%;
   height: 10%;
+  background-color: #ffa07a;
+  text-align:center;
+  font-size: 36pt;
+  display: flex;
+  justify-content: center; /* align horizontal */
+  align-items: center; /* align vertical */
 }
 
+/*
+
+#top5-banner {
+  font-size: 48pt;
+  border-color: black;
+  border-width: 2px;
+  border-style: solid;
+  border-radius: 10px;
+}
+
+*/
 #sidebar-heading {
   position:absolute;
   left:0%;

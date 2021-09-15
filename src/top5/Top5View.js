@@ -92,6 +92,7 @@ export default class Top5View {
         let listCard = document.getElementById("top5-list-" + listId);
         listCard.classList.remove("unselected-list-card");
         listCard.classList.add("selected-list-card");
+        document.getElementById("top5-statusbar").textContent  = "Top 5 " + this.controller.model.getList(listId).getName();
     }
 
     unhighlightList(listId) {
@@ -99,6 +100,7 @@ export default class Top5View {
         let listCard = document.getElementById("top5-list-" + listId);
         listCard.classList.add("unselected-list-card");
         listCard.classList.remove("selected-list-card");
+        document.getElementById("top5-statusbar").textContent  = "";
     }
 
     updateToolbarButtons(model) {
@@ -115,10 +117,10 @@ export default class Top5View {
         else {
             this.enableButton("redo-button");
         }
-        if (document.getElementById("selected-list-card") !== null){
-            this.disableButton("close-button");
-        } else{
+        if (document.getElementsByClassName("selected-list-card").length !== 0){
             this.enableButton("close-button");
+        } else{
+            this.disableButton("close-button");
         }
     }
 }
