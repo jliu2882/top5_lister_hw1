@@ -32,9 +32,11 @@ export default class Top5Controller {
             ev.preventDefault();
             var data = ev.dataTransfer.getData(item);
             if(data[5]!=item.id[5]){
-                this.dropItem(this.model.currentList, data[5],item.id[5]);
+               // this.dropItem(this.model.currentList, data[5],item.id[5]);
+                this.model.addMoveItemTransaction(data[5]-1, item.id[5]-1);
             }
- //       this.model.addChangeItemTransaction(i-1, this.model.currentList.getItemAt(i)); //
+
+
             this.model.sortLists();
             this.model.loadList(this.model.currentList.id);
         }
@@ -72,7 +74,7 @@ export default class Top5Controller {
             let item = document.getElementById("item-" + i);
             
             item.ondrop = (event) => {
-                this.drop(event, item)
+                this.drop(event, item);
             }
             item.ondragover = (event) => {
                 this.allowDrop(event);
@@ -98,6 +100,7 @@ export default class Top5Controller {
 
                     setTimeout(function(){
                         textInput.focus();
+                        textInput.selectionStart = textInput.selectionEnd = textInput.value.length;
                     }, 0);
                     item.appendChild(textInput);
                     
@@ -162,6 +165,7 @@ export default class Top5Controller {
             
             setTimeout(function(){
                 textInput.focus();
+                textInput.selectionStart = textInput.selectionEnd = textInput.value.length;
             }, 0);
 
             document.getElementById("top5-list-" + id).appendChild(textInput);

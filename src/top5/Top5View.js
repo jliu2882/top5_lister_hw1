@@ -33,7 +33,7 @@ export default class Top5View {
         let card = document.createElement("div");
         card.setAttribute("id", listId);
         card.setAttribute("class", "list-card");
-        if(newList === this.controller.getCurrentList()){
+        if(this.controller.getCurrentList() !== null && newList === this.controller.getCurrentList()){
             card.setAttribute("class", "selected-list-card");
         } else{
             card.setAttribute("class", "unselected-list-card");
