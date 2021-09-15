@@ -46,6 +46,9 @@ export default class Top5Controller {
         document.getElementById("redo-button").onmousedown = (event) => {
             this.model.redo();
         }
+        document.getElementById("close-button").onmousedown = (event) => {
+            this.model.sortList();
+        }
 
 
         // SETUP THE ITEM HANDLERS
