@@ -73,7 +73,7 @@ export default class Top5Model {
             else {
                 return 1;
             }
-        });+
+        });
         this.view.refreshLists(this.top5Lists);
     }
 
@@ -130,7 +130,7 @@ export default class Top5Model {
                 }
                 this.addNewList(listData.name, items);
             }
-            this.sortLists();   
+            this.sortLists();
             this.view.refreshLists(this.top5Lists);
             this.view.updateToolbarButtons(this);
             return true;
@@ -215,6 +215,7 @@ export default class Top5Model {
         this.currentList = null;
         this.sortLists();
         this.view.clearWorkspace();
+        this.tps.clearAllTransactions();
         this.view.updateToolbarButtons(this);
     }
 }

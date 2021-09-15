@@ -43,6 +43,9 @@ export default class Top5Controller {
         arr.moveItem(dropper-1,replaced-1);
         this.model.saveLists();
     }
+    getCurrentList(){
+        return this.model.currentList;
+    }
     //yea
 
     initHandlers() {
@@ -52,9 +55,6 @@ export default class Top5Controller {
                 let newList = this.model.addNewList("Untitled", ["?","?","?","?","?"]);            
                 this.model.loadList(newList.id);
                 this.model.saveLists();
-                console.log("esna");
-            } else{
-                console.log("discled");
             }
         }
         document.getElementById("undo-button").onmousedown = (event) => {
@@ -177,8 +177,9 @@ export default class Top5Controller {
                         event.target.value="Untitled";
                     }
                     this.model.getList(id).setName(event.target.value);
-                    this.model.sortLists();
                     this.model.loadList(id);
+                    this.model.sortLists();
+                    this.model.saveLists();
                 }
             }
             textInput.onblur = (event) => {
@@ -186,8 +187,9 @@ export default class Top5Controller {
                     event.target.value="Untitled";
                 }
                 this.model.getList(id).setName(event.target.value);
-                this.model.sortLists();
                 this.model.loadList(id);
+                this.model.sortLists();
+                this.model.saveLists(); 
             }
         }
     }

@@ -13,7 +13,6 @@ export default class Top5View {
         // GET THE UI CONTROL WE WILL APPEND IT TO
         let listsElement = document.getElementById("sidebar-list");
         listsElement.innerHTML = "";
-
         for (let i = 0; i < lists.length; i++) {
             let list = lists[i];
             list.id = i;
@@ -34,8 +33,11 @@ export default class Top5View {
         let card = document.createElement("div");
         card.setAttribute("id", listId);
         card.setAttribute("class", "list-card");
-        card.setAttribute("class", "unselected-list-card");
-
+        if(newList === this.controller.getCurrentList()){
+            card.setAttribute("class", "selected-list-card");
+        } else{
+            card.setAttribute("class", "unselected-list-card");
+        }
         // MAKE THE TEXT SPAN
         let textSpan = document.createElement("span");
         textSpan.setAttribute("id", "list-card-text-" + newList.id);
