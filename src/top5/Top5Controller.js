@@ -47,7 +47,7 @@ export default class Top5Controller {
             this.model.redo();
         }
         document.getElementById("close-button").onmousedown = (event) => {
-            this.model.sortList();
+            this.model.close();
         }
 
 

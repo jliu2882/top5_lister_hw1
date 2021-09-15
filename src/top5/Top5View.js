@@ -114,6 +114,11 @@ export default class Top5View {
         }
         else {
             this.enableButton("redo-button");
-        }   
+        }
+        if (document.getElementById("selected-list-card") !== null){
+            this.disableButton("close-button");
+        } else{
+            this.enableButton("close-button");
+        }
     }
 }

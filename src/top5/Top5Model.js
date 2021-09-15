@@ -73,7 +73,6 @@ export default class Top5Model {
                 return 1;
             }
         });
-        //
         this.view.refreshLists(this.top5Lists);
     }
 
@@ -103,7 +102,6 @@ export default class Top5Model {
             i++;
         }
         this.tps.clearAllTransactions();
-        this.view.updateToolbarButtons(this);
     }
 
     loadLists() {
@@ -180,5 +178,9 @@ export default class Top5Model {
             this.tps.doTransaction();
             this.view.updateToolbarButtons(this);
         }
+    }
+    close() {
+        this.view.updateToolbarButtons(this);
+        this.sortLists();
     }
 }
