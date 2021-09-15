@@ -22,32 +22,40 @@ export default class Top5Controller {
     }
 
     drag(ev, item) {
-        ev.dataTransfer.setData(item, ev.target.id);
+        if(item.innerHTML.length != 0){
+            ev.dataTransfer.setData(item, ev.target.id);
+        }
     }
 
     drop(ev, item) {
-        ev.preventDefault();
-        var data = ev.dataTransfer.getData(item);
-        this.dropItem(this.model.currentList, data[5],item.id[5]);
-       // ev.target.appendChild(document.getElementById(data));
-        this.model.sortLists();
-        this.model.loadList(this.model.currentList.id);
+        if(item.innerHTML.length != 0){
+            ev.preventDefault();
+            var data = ev.dataTransfer.getData(item);
+            if(data[5]!=item.id[5]){
+                this.dropItem(this.model.currentList, data[5],item.id[5]);
+            }
+ //       this.model.addChangeItemTransaction(i-1, this.model.currentList.getItemAt(i)); //
+            this.model.sortLists();
+            this.model.loadList(this.model.currentList.id);
+        }
     }
     dropItem(arr, dropper, replaced){
-        if(dropper!=replaced){
-            console.log(dropper + " will drop-kick " + replaced);
-            arr.moveItem(dropper-1,replaced-1);
-            this.model.saveLists();
-        }
+        arr.moveItem(dropper-1,replaced-1);
+        this.model.saveLists();
     }
     //yea
 
     initHandlers() {
         // SETUP THE TOOLBAR BUTTON HANDLERS
         document.getElementById("add-list-button").onmousedown = (event) => {
-            let newList = this.model.addNewList("Untitled", ["?","?","?","?","?"]);            
-            this.model.loadList(newList.id);
-            this.model.saveLists();
+            if(document.getElementById("item-1").innerHTML.length == 0){
+                let newList = this.model.addNewList("Untitled", ["?","?","?","?","?"]);            
+                this.model.loadList(newList.id);
+                this.model.saveLists();
+                console.log("esna");
+            } else{
+                console.log("discled");
+            }
         }
         document.getElementById("undo-button").onmousedown = (event) => {
             this.model.undo();
@@ -62,7 +70,7 @@ export default class Top5Controller {
         // SETUP THE ITEM HANDLERS
         for (let i = 1; i <= 5; i++) {
             let item = document.getElementById("item-" + i);
-
+            
             item.ondrop = (event) => {
                 this.drop(event, item)
             }
@@ -165,12 +173,18 @@ export default class Top5Controller {
 
             textInput.onkeydown = (event) => {
                 if (event.key === 'Enter') {
+                    if(event.target.value==""){
+                        event.target.value="Untitled";
+                    }
                     this.model.getList(id).setName(event.target.value);
                     this.model.sortLists();
                     this.model.loadList(id);
                 }
             }
             textInput.onblur = (event) => {
+                if(event.target.value==""){
+                    event.target.value="Untitled";
+                }
                 this.model.getList(id).setName(event.target.value);
                 this.model.sortLists();
                 this.model.loadList(id);

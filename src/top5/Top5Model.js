@@ -149,10 +149,18 @@ export default class Top5Model {
 
     addChangeItemTransaction = (id, newText) => {
         // GET THE CURRENT TEXT
+        if(newText == ""){
+            newText =  "?";
+        }
         let oldText = this.currentList.items[id];
-        let transaction = new ChangeItem_Transaction(this, id, oldText, newText);
-        this.tps.addTransaction(transaction);
-        this.view.updateToolbarButtons(this);
+        if(newText !== oldText){
+            let transaction = new ChangeItem_Transaction(this, id, oldText, newText);
+            this.tps.addTransaction(transaction);
+            this.view.updateToolbarButtons(this);
+        } else{
+            this.changeItem(this.id, this.newText);
+            this.view.updateToolbarButtons(this);
+        }
     }
 
     deleteList(id){
@@ -164,6 +172,7 @@ export default class Top5Model {
             this.saveLists();
             this.loadLists();
             this.view.updateToolbarButtons(this);
+            this.close();
         } else if(this.currentList !== null){
             if(this.currentList.id >= id){
                 this.currentList.id--;

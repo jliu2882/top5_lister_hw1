@@ -122,5 +122,11 @@ export default class Top5View {
         } else{
             this.disableButton("close-button");
         }
+        if(document.getElementById("item-1").innerHTML.length == 0){
+            this.enableButton("add-list-button");
+        } else{
+            this.disableButton("add-list-button");
+        }
+        this.controller.initHandlers();
     }
 }
