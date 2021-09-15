@@ -28,10 +28,17 @@ export default class Top5Controller {
     drop(ev, item) {
         ev.preventDefault();
         var data = ev.dataTransfer.getData(item);
-        console.log(data + " will drop-kick " + item.id);
-        
+        this.dropItem(this.model.currentList, data[5],item.id[5]);
        // ev.target.appendChild(document.getElementById(data));
         this.model.sortLists();
+        this.model.loadList(this.model.currentList.id);
+    }
+    dropItem(arr, dropper, replaced){
+        if(dropper!=replaced){
+            console.log(dropper + " will drop-kick " + replaced);
+            arr.moveItem(dropper-1,replaced-1);
+            this.model.saveLists();
+        }
     }
     //yea
 
@@ -51,7 +58,6 @@ export default class Top5Controller {
         document.getElementById("close-button").onmousedown = (event) => {
             this.model.close();
         }
-
 
         // SETUP THE ITEM HANDLERS
         for (let i = 1; i <= 5; i++) {
