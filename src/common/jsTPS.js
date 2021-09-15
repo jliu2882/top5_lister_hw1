@@ -183,7 +183,6 @@ export default class jsTPS {
             this.performingUndo = false;
         }
     }
-
     /**
      * clearAllTransactions
      * 

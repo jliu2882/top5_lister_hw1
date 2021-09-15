@@ -63,16 +63,17 @@ export default class Top5Model {
 
     sortLists() {
         this.top5Lists.sort((listA, listB) => {
-            if (listA.getName() < listB.getName()) {
+            if (listA.getName().toLowerCase() < listB.getName().toLowerCase()) {
                 return -1;
             }
-            else if (listA.getName === listB.getName()) {
+            else if (listA.getName().toLowerCase() === listB.getName().toLowerCase()) {
                 return 0;
             }
             else {
                 return 1;
             }
         });
+        //
         this.view.refreshLists(this.top5Lists);
     }
 
@@ -171,6 +172,12 @@ export default class Top5Model {
     undo() {
         if (this.tps.hasTransactionToUndo()) {
             this.tps.undoTransaction();
+            this.view.updateToolbarButtons(this);
+        }
+    }
+    redo() {
+        if (this.tps.hasTransactionToRedo()) {
+            this.tps.doTransaction();
             this.view.updateToolbarButtons(this);
         }
     }

@@ -16,6 +16,7 @@ export default class Top5View {
 
         for (let i = 0; i < lists.length; i++) {
             let list = lists[i];
+            list.id = i;
             this.appendListToView(list);
         }
     }
@@ -107,6 +108,12 @@ export default class Top5View {
         }
         else {
             this.enableButton("undo-button");
+        }
+        if (!tps.hasTransactionToRedo()) {
+            this.disableButton("redo-button");
+        }
+        else {
+            this.enableButton("redo-button");
         }   
     }
 }

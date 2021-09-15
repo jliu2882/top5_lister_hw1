@@ -16,6 +16,23 @@ export default class Top5Controller {
         this.initHandlers();
     }
 
+    //mabe doesnt' belong here but lol
+    allowDrop(ev) {
+        ev.preventDefault();
+    }
+
+    drag(ev) {
+        ev.dataTransfer.setData("text", ev.target.id);
+    }
+
+    drop(ev) {
+        ev.preventDefault();
+        var data = ev.dataTransfer.getData("text");
+        ev.target.appendChild(document.getElementById(data));
+        this.model.sortLists();
+    }
+    //yea
+
     initHandlers() {
         // SETUP THE TOOLBAR BUTTON HANDLERS
         document.getElementById("add-list-button").onmousedown = (event) => {
@@ -26,10 +43,27 @@ export default class Top5Controller {
         document.getElementById("undo-button").onmousedown = (event) => {
             this.model.undo();
         }
+        document.getElementById("redo-button").onmousedown = (event) => {
+            this.model.redo();
+        }
+
 
         // SETUP THE ITEM HANDLERS
         for (let i = 1; i <= 5; i++) {
             let item = document.getElementById("item-" + i);
+
+            item.ondrop = (event) => {
+                this.drop(event)
+            }
+            item.ondragover = (event) => {
+                this.allowDrop(event);
+            }
+            item.draggable = (event) => {
+                item.setAttribute("true");
+            }
+            item.ondragstart = (event) => {
+                this.drag(event);
+            }
 
             // AND FOR TEXT EDITING
             item.ondblclick = (ev) => {
@@ -42,11 +76,10 @@ export default class Top5Controller {
                     textInput.setAttribute("type", "text");
                     textInput.setAttribute("id", "item-text-input-" + i);
                     textInput.setAttribute("value", this.model.currentList.getItemAt(i-1));
-                    
+
                     setTimeout(function(){
                         textInput.focus();
                     }, 0);
-
                     item.appendChild(textInput);
                     
                     //didnt write this but not sure what this does
@@ -123,11 +156,13 @@ export default class Top5Controller {
                 if (event.key === 'Enter') {
                     this.model.getList(id).setName(event.target.value);
                     this.model.sortLists();
+                    this.model.loadList(id);
                 }
             }
             textInput.onblur = (event) => {
                 this.model.getList(id).setName(event.target.value);
                 this.model.sortLists();
+                this.model.loadList(id);
             }
         }
     }

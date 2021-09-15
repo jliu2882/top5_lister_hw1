@@ -12,11 +12,11 @@ export default class Top5List {
     }
     
     getName() {
-        return this.name;
+        return this.name.trim();
     }
 
     setName(initName) {
-        this.name = initName;
+        this.name = initName.trim();
     }
 
     getItemAt(index) {
