@@ -21,14 +21,16 @@ export default class Top5Controller {
         ev.preventDefault();
     }
 
-    drag(ev) {
-        ev.dataTransfer.setData("text", ev.target.id);
+    drag(ev, item) {
+        ev.dataTransfer.setData(item, ev.target.id);
     }
 
-    drop(ev) {
+    drop(ev, item) {
         ev.preventDefault();
-        var data = ev.dataTransfer.getData("text");
-        ev.target.appendChild(document.getElementById(data));
+        var data = ev.dataTransfer.getData(item);
+        console.log(data + " will drop-kick " + item.id);
+        
+       // ev.target.appendChild(document.getElementById(data));
         this.model.sortLists();
     }
     //yea
@@ -56,7 +58,7 @@ export default class Top5Controller {
             let item = document.getElementById("item-" + i);
 
             item.ondrop = (event) => {
-                this.drop(event)
+                this.drop(event, item)
             }
             item.ondragover = (event) => {
                 this.allowDrop(event);
@@ -65,7 +67,7 @@ export default class Top5Controller {
                 item.setAttribute("true");
             }
             item.ondragstart = (event) => {
-                this.drag(event);
+                this.drag(event, item);
             }
 
             // AND FOR TEXT EDITING

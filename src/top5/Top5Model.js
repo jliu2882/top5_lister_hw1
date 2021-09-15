@@ -157,17 +157,27 @@ export default class Top5Model {
 
     deleteList(id){
         
-        if(this.currentList == this.getList(this.getListIndex(id))){
+        if(this.currentList !== null && this.currentList.id == id){
             document.getElementById("top5-statusbar").textContent  = "";
             this.currentList = null;
             this.top5Lists.splice(this.getListIndex(id), 1);
             this.saveLists();
             this.loadLists();
-        } else{
+            this.view.updateToolbarButtons(this);
+        } else if(this.currentList !== null){
+            if(this.currentList.id >= id){
+                this.currentList.id--;
+            }
             this.top5Lists.splice(this.getListIndex(id), 1);
             this.saveLists();
             this.loadLists();
             this.view.highlightList(this.currentList.id);
+            this.view.updateToolbarButtons(this);
+        } else {
+            this.top5Lists.splice(this.getListIndex(id), 1);
+            this.saveLists();
+            this.loadLists();
+            this.view.updateToolbarButtons(this);
         }
         
     }
@@ -193,6 +203,7 @@ export default class Top5Model {
     }
     close() {
         document.getElementById("top5-statusbar").textContent  = "";
+        this.currentList = null;
         this.sortLists();
         this.view.clearWorkspace();
         this.view.updateToolbarButtons(this);
